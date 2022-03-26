@@ -33,9 +33,14 @@ function toggleDiv() {
 }
 
 const firebaseConfig = {
-    /*
-    Fill in firebase config
-    */
+    apiKey: "AIzaSyBj5nWN6kpJxqyIvAdpltV4fD9mb0GBUaQ",
+    authDomain: "fish-feeder-01.firebaseapp.com",
+    databaseURL: "https://fish-feeder-01-default-rtdb.firebaseio.com",
+    projectId: "fish-feeder-01",
+    storageBucket: "fish-feeder-01.appspot.com",
+    messagingSenderId: "303334623682",
+    appId: "1:303334623682:web:ccfbc72d08b8513bd6ee5b",
+    measurementId: "G-7DMPL4K3W6"
 };
 firebase.initializeApp(firebaseConfig);
 
