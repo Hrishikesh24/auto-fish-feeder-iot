@@ -44,15 +44,38 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-var countRef = firebase.database().ref('count');
+
+var temp = firebase.database().ref('dev1/temp');
+temp.on('value', function(snapshot) {
+    temp = snapshot.val()
+    document.getElementById("Temp").innerText = temp;
+});
+
+var ph = firebase.database().ref('dev1/ph');
+ph.on('value', function(snapshot) {
+    ph = snapshot.val()
+    document.getElementById("ph").innerText = ph>14? "pH Sensor Error":ph;
+    console.log
+});
+
+var timestamp = firebase.database().ref('dev1/timestamp');
+timestamp.on('value', function(snapshot) {
+    timestamp = new Date(snapshot.val() * 1000).toISOString().slice(0, 19).replace('T', ' ')
+     testTS = `<p >Last Updated: ${timestamp}</p> `
+     document.getElementById("timeS").innerHTML = testTS;
+    //  console.log(testTS);
+     document.getElementById("timeS1").innerHTML = testTS;
+});
+
+var countRef = firebase.database().ref('dev1/count');
 countRef.on('value', function(snapshot) {
     count = snapshot.val()
-    console.log(count)
+    // console.log(count)
 });
 
 function feednow() {
-    firebase.database().ref().update({
-        feednow: 1
+    firebase.database().ref('dev1').update({
+        feednow: 1,
     });
 }
 
@@ -64,29 +87,33 @@ $(document).ready(function() {
 $('#timepicker').mdtimepicker().on('timechanged', function(e) {
     console.log(e.time)
     addStore(count, e);
-    count = count + 1
-    firebase.database().ref().update({
+    count > 0 ? count = 1:count = count + 1
+    firebase.database().ref('dev1/').update({
         count: parseInt(count),
     });
 });
 
 function addStore(count, e) {
-    firebase.database().ref('timers/timer' + count).set({
-        time: e.time
-    });
-    addDiv();
+    if(count >= 1){
+        alert("Hold one! Only one schedule allowed!")
+    } 
+    else{
+        firebase.database().ref('dev1/timers/timer' + count).set({
+            time: e.time
+        });
+        addDiv();
+    }
 }
 
 function showShort(id) {
     var idv = $(id)[0]['id']
     $("#time_" + idv).toggle();
     $("#short_" + idv).toggle();
-
 }
 
 function removeDiv(id) {
     var idv = $(id)[0]['id']
-    firebase.database().ref('timers/' + idv).remove();
+    firebase.database().ref('dev1/timers/' + idv).remove();
     if (count >= 0) {
         count = count - 1;
     }
@@ -98,7 +125,7 @@ function removeDiv(id) {
 }
 
 function addDiv() {
-    var divRef = firebase.database().ref('timers');
+    var divRef = firebase.database().ref('dev1/timers');
     divRef.on('value', function(snapshot) {
         var obj = snapshot.val()
         var i = 0;
@@ -112,7 +139,7 @@ function addDiv() {
             h = (h < 10) ? ("0" + h) : h; // leading 0 at the left for 1 digit hours
             var ampm = H < 12 ? " AM" : " PM";
             ts = h + ts.substr(2, 3) + ampm;
-            console.log(ts)
+            // console.log(ts)
 
             const x = `
             <div id=${propertyValues[i][0]}>
