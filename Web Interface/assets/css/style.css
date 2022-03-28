@@ -1,7 +1,7 @@
 :root {
     --primary-light: #8abdff;
     --primary: #00b853;
-    --primary-dark: #5b0eeb;
+    --primary-dark: #00b853;
     --white: #FFFFFF;
     --greyLight-1: #E4EBF5;
     --greyLight-2: #c8d0e7;
@@ -282,10 +282,11 @@ html {
         align-items: center;
         font-family: "Poppins", sans-serif;
         background: var(--greyLight-1);
-        padding-top: 50%;
+        padding-top: 5%;
+        padding-bottom: 5%;
     }
     .components {
-        width: 70%;
+        width: 90%;
         height: 50%;
         border-radius: 3rem;
         box-shadow: 0.8rem 0.8rem 1.4rem var(--greyLight-2), -0.2rem -0.2rem 1.8rem var(--white);
