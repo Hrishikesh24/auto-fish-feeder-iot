@@ -118,7 +118,7 @@ function removeDiv(id) {
         count = count - 1;
     }
 
-    firebase.database().ref().update({
+    firebase.database().ref('dev1/').update({
         count: parseInt(count),
     });
     $(id).fadeOut(1, 0).fadeTo(500, 0)
